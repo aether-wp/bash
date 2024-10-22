@@ -1,0 +1,19 @@
+function chpwd() {
+    local current_path=$(pwd)
+    local site_name=""
+    if [[ $current_path == */Sites/* ]]; then
+        # Check if we're directly in a site directory or in a subdirectory
+        if [[ $current_path == */Sites/* && ! $current_path == */Sites/*/*  ]]; then
+            site_name=$(basename "$current_path")
+        else
+            site_name=$(echo $current_path | sed -n 's|.*/Sites/\([^/]*\).*|\1|p')
+        fi
+
+        if [[ -n "$site_name" ]]; then
+            echo $fg_no_bold[green] $'\u21AF' "--- Setting wp-cli and composer to use PHP version for $site_name.test"
+            alias composer="herd composer --site=$site_name"
+            alias wp="herd php --site=$site_name /usr/local/bin/wp-cli"
+            alias wpx="herd debug --site=$site_name /usr/local/bin/wp-cli"
+        fi
+    fi
+}
