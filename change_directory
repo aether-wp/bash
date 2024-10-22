@@ -1,3 +1,5 @@
+# This script assumes your sites are stored in a /Sites/ directory
+
 function chpwd() {
     local current_path=$(pwd)
     local site_name=""
