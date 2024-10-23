@@ -27,8 +27,6 @@ function chpwd() {
         sites_path="$HOME/$sites_path"
     fi
 
-    echo $sites_path;
-
     if [[ $current_path == *"$sites_path"/* ]]; then
         # Check if we're directly in a site directory or in a subdirectory
         if [[ $current_path == "$sites_path"/* && ! $current_path == "$sites_path"/*/*  ]]; then
@@ -38,7 +36,7 @@ function chpwd() {
         fi
 
         if [[ -n "$site_name" ]]; then
-            echo $fg_no_bold[green] $'\u21AF' "--- Setting wp-cli and composer to use PHP version for $site_name.test"
+            echo $fg_no_bold[green] $'\u21AF' "--- Setting wp-cli and composer to use PHP version for https://$site_name.test"
             alias composer="herd composer --site=$site_name"
             alias php="herd php --site=$site_name"
             alias wp="herd php --site=$site_name /usr/local/bin/wp-cli"
