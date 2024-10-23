@@ -1,5 +1,6 @@
 ## Automatically sets the correct HERD PHP version for php, composer and wp commands
 ## Adds a wpx command for using wp-cli with php debug enabled
+## Automatically sets the SITE_PATH when running wp-cli commands in subdirectories
 ## Assumes sites are located in ~/Sites/
 ## Set your own path using HERD_SITES_PATH
 
@@ -39,8 +40,8 @@ function chpwd() {
             echo $fg_no_bold[green] $'\u21AF' "--- Setting wp-cli and composer to use PHP version for https://$site_name.test"
             alias composer="herd composer --site=$site_name"
             alias php="herd php --site=$site_name"
-            alias wp="herd php --site=$site_name /usr/local/bin/wp-cli"
-            alias wpx="herd debug --site=$site_name /usr/local/bin/wp-cli"
+            alias wp="herd php --site=$site_name /usr/local/bin/wp-cli --path=$sites_path/$site_name"
+            alias wpx="herd debug --site=$site_name /usr/local/bin/wp-cli --path=$sites_path/$site_name"
         fi
     fi
 }
