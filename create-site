@@ -1,0 +1,45 @@
+#!/bin/zsh
+
+## Create a site using: create-site {site_name}
+## Make sure the file is executable by running: chmod +x create-site
+## Assumes sites are located in ~/Sites/
+## Set your own path using HERD_SITES_PATH
+## Save this file on your computer and add an alias in your ~/.zshrc file (alias create-site='. {PATH_TO}/create-site')
+
+## Start Example
+# export HERD_SITES_PATH="/Users/marinusklasen/Sites"
+# Add alias to ~/.zshrc: alias create-site='. /Users/marinusklasen/Workspace/Aether/scripts/create-site'
+## End Example
+
+source ~/.zshrc
+
+# Check if a site name was provided
+if [ $# -eq 0 ]; then
+    echo "Please provide a site name."
+    exit 1
+fi
+
+# Get the site name from the first argument
+site_name=$1
+
+# Use HERD_SITES_PATH if set, otherwise fallback to ~/Sites
+sites_path=${HERD_SITES_PATH:-~/Sites}
+
+# Create the directory in the sites path
+site_dir="$sites_path/$site_name"
+mkdir -p "$site_dir"
+
+# Change to the new directory
+cd "$site_dir"
+
+# Run WordPress commands
+wp core download
+wp core config --dbhost=127.0.0.1 --dbname="$site_name" --dbuser=root --dbpass=
+wp db create
+wp core install --url="https://$site_name.test" --title="$site_name" --admin_user=admin --admin_password=admin --admin_email="admin@$site_name.test"
+
+# Run herd secure
+herd secure
+
+# Print success message
+echo $fg_no_bold[green] $'\u21AF' "--- WordPress site '$site_name' has been set up successfully."
