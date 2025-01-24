@@ -7,7 +7,7 @@
 ## Save this file on your computer and make sure to source it in your ~/.zshrc file
 ## Start Example
 # export HERD_SITES_PATH="/Users/marinusklasen/Sites/"
-# source ~/Workspace/Aether/scripts/change_directory
+# source ~/Workspace/Aether/scripts/change-directory
 ## End Example
 
 function chpwd() {
